@@ -17,3 +17,7 @@ https://python-socketio.readthedocs.io/en/latest/client.html
 websocket io server
 pip install python-socketio
 https://python-socketio.readthedocs.io/en/latest/server.html
+
+eventlet
+pip install eventlet
+https://pypi.org/project/eventlet/

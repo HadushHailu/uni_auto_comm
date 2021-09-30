@@ -37,6 +37,9 @@ class WebsocketClient():
     def on_disconnect(self):
         LOGGER.info("ws diconnected.")
 
+    def get_ws_sio(self):
+        return self.sio
+
     def init_websocketio(self):
         sio = socketio.Client()
         # self.sio.reconnection = False

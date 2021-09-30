@@ -18,25 +18,30 @@ LOGGER.setLevel(level=logging.INFO)
 class EdgeComm():
     def __init__(self):
         # varaibles
-        self.ws_hostaddress = 'http://localhost:6000'
+        self.ws_hostaddress = 'https://heroku-uni-socket.herokuapp.com/'
+        self.ws_sio = ""
 
         # init
         self.ws = WebsocketClient(self.ws_hostaddress,self.ws_msg)
 
-        self.map_2d_data_pub = Map2DDataPUB()
         self.map_2d_data_sub = Map2DDataSUB(self.map_2d_data_pub_cb)
         
     def ws_msg(self,msg):
         LOGGER.info(" ws -> edge_comm got msg: %s", msg)
-        self.map_2d_data_pub.pub("edge_comm got msg %s" % msg)
 
     def map_2d_data_pub_cb(self,msg):
-        LOGGER.info(" msg_ntk -> edge_comm got msg %s", msg)
+        LOGGER.info(" msg_ntk -> edge_comm got msg")
+        
+        # emit
+        self.ws_sio.emit('map_data', {'map': "MAP DATA"})
 
     
     def start_it(self):
         # ws
         self.ws.start_it()
+
+        # get ws_sio
+        self.ws_sio = self.ws.get_ws_sio()
 
         # msg_ntk
         self.map_2d_data_sub.deamon = True
